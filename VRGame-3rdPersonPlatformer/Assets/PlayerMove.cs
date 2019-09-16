@@ -26,7 +26,6 @@ public class PlayerMove : MonoBehaviour
         float lh = Input.GetAxis("Horizontal");
         float lv = Input.GetAxis("Vertical");
 
-
         // vector that holds input values
         moveInput = new Vector3(lh, 0f, lv);
         // get camera forward vector

@@ -21,7 +21,6 @@ public class ExampleCameraMove : MonoBehaviour
 
     void Update()
     {
-        Debug.Log(transform.position);
         if (index < camPositions.Length - 1)
         {
             if (Input.GetKeyDown(KeyCode.Space))
