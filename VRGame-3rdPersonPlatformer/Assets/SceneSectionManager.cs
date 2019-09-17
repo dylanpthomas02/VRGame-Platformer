@@ -25,11 +25,16 @@ public class SceneSectionManager : MonoBehaviour
         SetCamPosandRot();
     }
 
+    private void Update()
+    {
+        Debug.Log("Position: " + cam.transform.position);
+        Debug.Log("Rotation: " + cam.transform.rotation);
+    }
+
     private void SetCamPosandRot()
     {
         cam.transform.position = camPositions[index].transform.position;
         cam.transform.rotation = camPositions[index].transform.rotation;
-        Debug.Log(index);
     }
 
     public void ForwardSection()

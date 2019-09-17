@@ -1,21 +1,23 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerMove : MonoBehaviour
 {
     public Transform cam;
-
     public int moveSpeed = 15;
-    //Vector3 mainCamera; // start mainCamera = Camera.main;
+    public int jumpForce = 200;
+    public LayerMask layerMask;
+
+    float groundDistance = .1f;
+    bool isGrounded = false;
+    float fallMultiplier = 3f;
+    float lowJumpMultiplier = 2f;
     Vector3 moveInput;
     Vector3 moveVelocity;
-    Rigidbody rb; // start getcomponent. Freeze rotation on all axes in inspector!
+    Rigidbody rb;
     //Animator anim; 
 
-    private void Start()
+    private void Awake()
     {
-        //mainCamera = Camera.main.transform.forward;
         rb = GetComponent<Rigidbody>();
         //anim = GetComponent<Animator>();
     }
@@ -28,10 +30,9 @@ public class PlayerMove : MonoBehaviour
 
         // vector that holds input values
         moveInput = new Vector3(lh, 0f, lv);
-        // get camera forward vector
-        //Vector3 cameraForward = mainCamera;
+        // get camera's forward vector
         Vector3 cameraForward = cam.forward;
-        // make sure we prevent moving up and down
+        // prevent up and down movement
         cameraForward.y = 0;
 
 
@@ -53,7 +54,32 @@ public class PlayerMove : MonoBehaviour
         // doesn’t actually move character. += would move character.
         moveVelocity = transform.forward * moveSpeed * moveInput.sqrMagnitude;
 
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            if (CheckGroundDistance())
+            {
+                rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            }
+        }
+
+        //if we're falling
+        //if (rb.velocity.y < 0)
+        //{
+        //    // fall faster than Unity's physics
+        //    rb.velocity += Vector3.up * Physics.gravity.y * (fallMultiplier - 1) * Time.deltaTime;
+        //}
+        //else if (rb.velocity.y > 0)
+        //{
+        //    rb.velocity += Vector3.up * Physics.gravity.y * (lowJumpMultiplier - 1) * Time.deltaTime;
+        //}
+
         //Animating();
+    }
+
+    bool CheckGroundDistance()
+    {
+        return Physics.Raycast(transform.position, -transform.up, groundDistance, layerMask);
     }
 
     void FixedUpdate()

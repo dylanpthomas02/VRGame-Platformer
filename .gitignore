@@ -4,6 +4,12 @@
 [Bb]uild/
 [Bb]uilds/
 AssetStoreOriginals/
+Lowpol*
+Sample*
+Styli*
+Protot*
+Poly*
+
 
 # Visual Studio cache directory
 .vs/
